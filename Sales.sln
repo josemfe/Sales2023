@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34031.279
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sales.Share", "Sales.Share\Sales.Share.csproj", "{BBF97089-6B7C-4562-A097-A928018246BA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sales.API", "Sales.API\Sales.API.csproj", "{836DAF9D-4B58-44EE-A23A-A4B289118840}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sales.Web", "Sales.Web\Sales.Web.csproj", "{E37456C1-8F07-429B-AA1C-485DAB147122}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BBF97089-6B7C-4562-A097-A928018246BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBF97089-6B7C-4562-A097-A928018246BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBF97089-6B7C-4562-A097-A928018246BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBF97089-6B7C-4562-A097-A928018246BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{836DAF9D-4B58-44EE-A23A-A4B289118840}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{836DAF9D-4B58-44EE-A23A-A4B289118840}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{836DAF9D-4B58-44EE-A23A-A4B289118840}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{836DAF9D-4B58-44EE-A23A-A4B289118840}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E37456C1-8F07-429B-AA1C-485DAB147122}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E37456C1-8F07-429B-AA1C-485DAB147122}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E37456C1-8F07-429B-AA1C-485DAB147122}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E37456C1-8F07-429B-AA1C-485DAB147122}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7022CB72-2239-4CE2-9137-57599B027EF6}
+	EndGlobalSection
+EndGlobal
