@@ -10,7 +10,7 @@ namespace Sales.API.Data
                 
         }
 
-        public DbSet<Country> Contries { get; set; }
+        public DbSet<Country> Countries { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
