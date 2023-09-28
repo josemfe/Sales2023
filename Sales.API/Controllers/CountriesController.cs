@@ -20,7 +20,7 @@ namespace Sales.API.Controllers
         [HttpGet]
         public async Task<ActionResult> GetAsync()
         {
-            return Ok(await _dataContext.Countries.ToListAsync());
+            return Ok(await _dataContext.Countries.Include(s=> s.States).ToListAsync());
         }
 
         [HttpPost]
