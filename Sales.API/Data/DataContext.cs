@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Sales.Share.Entities;
-using Sales.Shared.Entities;
 
 namespace Sales.API.Data
 {

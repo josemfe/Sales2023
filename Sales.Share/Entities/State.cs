@@ -1,7 +1,7 @@
 ﻿using Sales.Share.Entities;
 using System.ComponentModel.DataAnnotations;
 
-namespace Sales.Shared.Entities
+namespace Sales.Share.Entities
 {
     public class State
     {

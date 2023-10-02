@@ -5,51 +5,36 @@ using Sales.Share.Entities;
 
 namespace Sales.API.Controllers
 {
+
     [ApiController]
-    [Route("api/countries")]
-    public class CountriesController : ControllerBase
+    [Route("api/states")]
+    public class StatesController: ControllerBase
     {
         private readonly DataContext _dataContext;
 
-        //public CountriesController(DataContext dataContext)
-        //{
-        //    _dataContext = dataContext;
-        //}
-        public CountriesController(DataContext dataContext) => _dataContext = dataContext;
+        public StatesController(DataContext dataContext) => _dataContext = dataContext;
 
         [HttpGet]
         public async Task<ActionResult> GetAsync()
         {
-            return Ok(await _dataContext.Countries.Include(s=> s.States).ToListAsync());
-        }
-
-        [HttpGet("{id:int}")]
-        public async Task<ActionResult> GetAsync(int id)
-        {
-            var country = await _dataContext.Countries.Include(s => s.States).ThenInclude(c => c.Cities).FirstOrDefaultAsync(x => x.Id == id);
-            if (country is null)
-            {
-                return NotFound();
-            }
-
-            return Ok(country);
+            return Ok(await _dataContext.States.Include(s => s.Cities).ToListAsync());
         }
 
         [HttpPost]
-        public async Task<ActionResult> PostAsync(Country country)
+        public async Task<ActionResult> PostAsync(State state)
         {
             try
             {
-                _dataContext.Add(country);
+                _dataContext.Add(state);
                 await _dataContext.SaveChangesAsync();
-                return Ok(country);
+                return Ok(state);
             }
             catch (DbUpdateException dbUpdateException)
             {
-                if (dbUpdateException.InnerException!.Message.Contains("duplicate") || 
+                if (dbUpdateException.InnerException!.Message.Contains("duplicate") ||
                     dbUpdateException.InnerException!.Message.Contains("duplicada"))
                 {
-                    return BadRequest($"El país {country.Name} ya existe.");
+                    return BadRequest($"La provincia {state.Name} ya existe.");
                 }
                 else
                 {
@@ -63,22 +48,33 @@ namespace Sales.API.Controllers
 
         }
 
-        
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult> GetAsync(int id)
+        {
+            var state = await _dataContext.States.FirstOrDefaultAsync(x => x.Id == id);
+            if (state is null)
+            {
+                return NotFound();
+            }
+
+            return Ok(state);
+        }
+
         [HttpPut]
-        public async Task<ActionResult> PutAsync(Country country)
+        public async Task<ActionResult> PutAsync(State state)
         {
             try
             {
-                _dataContext.Update(country);
+                _dataContext.Update(state);
                 await _dataContext.SaveChangesAsync();
-                return Ok(country);
+                return Ok(state);
             }
             catch (DbUpdateException dbUpdateException)
             {
                 if (dbUpdateException.InnerException!.Message.Contains("duplicate") ||
                    dbUpdateException.InnerException!.Message.Contains("duplicada"))
                 {
-                    return BadRequest($"El país {country.Name} ya existe.");
+                    return BadRequest($"La provincia {state.Name} ya existe.");
                 }
                 else
                 {
@@ -95,13 +91,13 @@ namespace Sales.API.Controllers
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteAsync(int id)
         {
-            var country = await _dataContext.Countries.FirstOrDefaultAsync(x => x.Id == id);
-            if (country == null)
+            var state = await _dataContext.States.FirstOrDefaultAsync(x => x.Id == id);
+            if (state == null)
             {
                 return NotFound();
             }
 
-            _dataContext.Remove(country);
+            _dataContext.Remove(state);
             await _dataContext.SaveChangesAsync();
             return NoContent();
         }
