@@ -1,0 +1,72 @@
+﻿@page "/state/edit/{Id:int}"
+
+
+@inject IRepository repository
+@inject NavigationManager navigationManager
+@inject SweetAlertService sweetAlertService
+
+<h3>Editar Provincia</h3>
+
+@if (state is null)
+{
+    <p> Cargando....</p>
+}
+else
+{
+    <StateForm @ref="stateForm" State="state" OnValidSubmit="EditAsync" ReturnAction="Return" />
+}
+
+@code {
+
+    private State? state;
+    private StateForm? stateForm;
+
+
+    [Parameter]
+    public int Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var responseHttp = await repository.GetAsync<State>($"api/states/{Id}");
+
+        if (responseHttp.Error)
+        {
+            if (responseHttp.HttpResponseMessage.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                navigationManager.NavigateTo("states");
+            }
+            else
+            {
+                var messageError = await responseHttp.GetErrorMessageAsync();
+                await sweetAlertService.FireAsync("Error", messageError, SweetAlertIcon.Error);
+            }
+        }
+        else
+        {
+            state = responseHttp.Response;
+        }
+    }
+
+    private async Task EditAsync()
+    {
+        var responseHTTP = await repository.PutAsync("api/states", state);
+
+        if (responseHTTP.Error)
+        {
+            var mensajeError = await responseHTTP.GetErrorMessageAsync();
+            await sweetAlertService.FireAsync("Error", mensajeError, SweetAlertIcon.Error);
+        }
+        else
+        {
+            Return();
+        }
+    }
+
+    private void Return()
+    {
+        stateForm!.FormPostedSuccessfully = true;
+        navigationManager.NavigateTo($"/country/details/{state.CountryId}");
+    }
+
+
+}

@@ -1,0 +1,38 @@
+﻿@page "/city/create/{Id:int}"
+
+
+@inject IRepository repository
+@inject NavigationManager navigationManager
+@inject SweetAlertService sweetAlertService
+
+<h3>Crear Provincia</h3>
+
+<CityForm @ref="cityForm" City="city" OnValidSubmit="CreateAsync" ReturnAction="Return" />
+
+@code {
+    private City city = new();
+    private CityForm? cityForm;
+
+    [Parameter]
+    public int Id { get; set; }
+
+    private async Task CreateAsync()
+    {
+        city.StateId = Id;
+        var responseHttp = await repository.PostAsync("/api/cities", city);
+        if (responseHttp.Error)
+        {
+            var message = await responseHttp.GetErrorMessageAsync();
+            await sweetAlertService.FireAsync("Error", message);
+            return;
+        }
+
+        Return();
+    }
+
+    private void Return()
+    {
+        cityForm.FormPostedSuccessfully = true;
+        navigationManager.NavigateTo($"/state/details/{Id}");
+    }
+}

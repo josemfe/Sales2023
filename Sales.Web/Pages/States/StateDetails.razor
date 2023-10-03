@@ -1,24 +1,24 @@
-﻿@page "/country/details/{Id:int}"
+﻿@page "/state/details/{StateId:int}"
 @inject IRepository repository
 @inject NavigationManager navigationManager
 @inject SweetAlertService sweetAlertService
 
 
-@if (country is null)
+@if (state is null)
 {
     <p> Cargando....</p>
 
 }
 else
 {
-    <h3>@country.Name </h3>
+    <h3>@state.Name </h3>
 
     <div class="mb-3">
-        <a class="btn btn-primary" href="/state/create/@country.Id">Nueva Provincia</a>
-        <a class="btn btn-success" href="/countries">Volver</a>
+        <a class="btn btn-primary" href="/city/create/@state.Id">Nueva Ciudad</a>
+        <a class="btn btn-success" href="/country/details/@state.CountryId">Volver</a>
     </div>
 
-    <GenericList MyList="states">
+    <GenericList MyList="cities">
         <NoRecords>
             <p>No hay registros para mostrar... </p>
 
@@ -28,25 +28,20 @@ else
                 <thead>
                     <tr>
                         <th></th>
-                        <th>Provincia</th>
-                        <th># Ciudades</th>
+                        <th>Ciudad</th>
+                        
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var state in states!)
+                    @foreach (var city in cities!)
                     {
                         <tr>
                             <td>
-                                <a href="/state/details/@state.Id" class="btn btn-info">Detalles</a>
-                                <a href="/state/edit/@state.Id" class="btn btn-warning">Editar</a>
-                                <button class="btn btn-danger" @onclick=@(() => DeleteAsync(state))>Borrar</button>
+                                <a href="/city/edit/@city.Id" class="btn btn-warning">Editar</a>
+                                <button class="btn btn-danger" @onclick=@(() => DeleteAsync(city))>Borrar</button>
                             </td>
                             <td>
-                                @state.Name
-                            </td>
-                            <td>
-                                @state.CitiesNumber
-
+                                @city.Name
                             </td>
                         </tr>
                     }
@@ -58,11 +53,11 @@ else
 
 
 @code {
-    public Country country;
-    public List<State> states { get; set; }
+    private State state;
+    private List<City> cities;
 
     [Parameter]
-    public int Id { get; set; }
+    public int StateId { get; set; }
 
     protected async override Task OnInitializedAsync()
     {
@@ -71,7 +66,7 @@ else
 
     private async Task LoadAsync()
     {
-        var responseHttp = await repository.GetAsync<Country>($"api/countries/{Id}");
+        var responseHttp = await repository.GetAsync<State>($"api/states/{StateId}");
 
         if (responseHttp.Error)
         {
@@ -86,16 +81,16 @@ else
             return;
         }
 
-        country = responseHttp.Response;
-        states = country.States.ToList();
+        state = responseHttp.Response;
+        cities = state.Cities.ToList();
     }
 
-    private async Task DeleteAsync(State state)
+    private async Task DeleteAsync(City city)
     {
         var result = await sweetAlertService.FireAsync(new SweetAlertOptions
             {
                 Title = "Confirmación",
-                Text = $"¿Esta seguro que quieres borrar la provincia {state.Name}?",
+                Text = $"¿Esta seguro que quieres borrar la ciudad {city.Name}?",
                 Icon = SweetAlertIcon.Question,
                 ShowCancelButton = true
             });
@@ -107,7 +102,7 @@ else
             return;
         }
 
-        var responseHTTP = await repository.DeleteAsync($"api/states/{state.Id}");
+        var responseHTTP = await repository.DeleteAsync($"api/cities/{city.Id}");
 
         if (responseHTTP.Error)
         {
