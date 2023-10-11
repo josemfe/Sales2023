@@ -4,7 +4,7 @@
 @inject IRepository repository
 @inject NavigationManager navigationManager
 @inject SweetAlertService sweetAlertService
-
+@attribute [Authorize(Roles = "Admin")]
 <h3>Editar Provincia</h3>
 
 @if (state is null)

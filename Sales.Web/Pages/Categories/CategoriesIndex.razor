@@ -3,7 +3,7 @@
 @inject NavigationManager navigationManager
 @inject SweetAlertService sweetAlertService
 
-
+@attribute [Authorize(Roles = "Admin")]
 <h3>Categorías</h3>
 
 <div class="mb-3">

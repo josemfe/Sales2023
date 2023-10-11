@@ -3,7 +3,7 @@
 @inject NavigationManager navigationManager
 @inject SweetAlertService sweetAlertService
 
-
+@attribute [Authorize(Roles = "Admin")]
 @if (country is null)
 {
     <p> Cargando....</p>
